@@ -1,135 +1,210 @@
-# PersonaPulse
-AI-Powered Multi-Platform Content Personalization Engine  
-Built using Amazon Bedrock
+ PersonaPulse AI
+AI-Powered Multi-Platform Content Personalization Engine
 
----
+Built with Amazon Bedrock (Serverless)
 
-## 🚀 Overview
+ Overview
 
-PersonaPulse is an AI-powered system that transforms a single content idea into optimized, platform-specific posts tailored for different audiences and tones.
+PersonaPulse AI transforms a single content idea into platform-optimized, audience-personalized posts using Generative AI.
 
-Instead of manually rewriting content for LinkedIn, Instagram, Twitter, YouTube, and blogs, PersonaPulse uses Amazon Bedrock to intelligently personalize and optimize content.
+Instead of manually rewriting content for LinkedIn, Instagram, Twitter, YouTube, or blogs, PersonaPulse intelligently adapts tone, structure, and engagement strategy using Amazon Bedrock foundation models.
 
----
+This project demonstrates meaningful AI usage in real-world content workflows.
 
-## 🎯 Problem
+Problem Statement
 
-Content creators and businesses struggle to:
+Content creators, students, startups, and marketing teams struggle with:
 
-- Rewrite content for multiple platforms
-- Adjust tone for different audiences
-- Maintain brand consistency
-- Improve engagement without guesswork
+Rewriting content for multiple platforms
 
-Manual rewriting wastes time and reduces productivity.
+Adjusting tone for different audiences
 
----
+Maintaining brand consistency
 
-## 💡 Solution
+Improving engagement without guesswork
 
-PersonaPulse:
+Manual rewriting is repetitive and time-consuming.
 
-- Accepts a core idea
-- Adapts it to selected platform
-- Personalizes tone and audience
-- Generates engagement-optimized output
-- Calculates engagement score
+Solution
 
----
+PersonaPulse AI:
 
-## 🧠 Why AI?
+Accepts a core idea
+
+Adapts it for selected platform
+
+Personalizes tone and audience
+
+Generates structured output (Hook, Content, CTA, Hashtags)
+
+Predicts engagement score
+
+All powered by Amazon Bedrock.
+
+ Why AI?
 
 This problem requires:
 
-- Semantic understanding
-- Context-aware rewriting
-- Tone transfer
-- Platform-aware formatting
-- Engagement optimization
+Semantic understanding
 
-Traditional rule-based systems cannot achieve this.
+Context-aware rewriting
 
-Amazon Bedrock enables advanced generative AI for personalization.
+Tone transformation
 
----
+Platform-aware formatting
 
-## ☁️ AWS Architecture
+Structured JSON generation
 
-User → React Frontend → API Gateway → AWS Lambda → Amazon Bedrock → Response → Frontend
+Traditional rule-based systems cannot handle this.
 
-AWS Services Used:
+Amazon Bedrock enables intelligent, scalable content transformation.
 
-- Amazon Bedrock (LLM)
-- AWS Lambda (Backend logic)
-- API Gateway (REST API)
-- DynamoDB (Optional storage)
-- S3 (Optional asset storage)
+Architecture
+User (Browser)
+      ↓
+React Frontend (SPA)
+      ↓
+Amazon API Gateway
+      ↓
+AWS Lambda
+      ↓
+Amazon Bedrock (Nova Micro)
+      ↓
+Structured JSON Response
+      ↓
+Frontend Rendering
 
----
+ AWS Services Used
 
-## 📂 Project Structure
+Amazon Bedrock (Nova Micro – Serverless)
 
-Frontend:
-- React application
-- Form input
-- Output display
-- Engagement meter
+AWS Lambda (Backend logic)
 
-Backend:
-- Lambda handler
-- Bedrock client
-- Prompt engine
-- Engagement scoring
+Amazon API Gateway (REST endpoint)
 
----
+IAM Roles (Secure Bedrock access)
 
-## ⚙️ Setup Instructions
+CloudWatch (Monitoring & Logs)
 
-### Backend Deployment
-1. Create Lambda function
-2. Add IAM permissions
-3. Deploy code
-4. Connect API Gateway
+Features
 
-### Frontend Setup
+Platform selection (LinkedIn, Instagram, Twitter, YouTube, Blog)
+
+Audience targeting
+
+Tone customization
+
+Structured JSON output
+
+Engagement scoring system
+
+AI-powered prompt conditioning
+
+Serverless scalable backend
+
+Futuristic AI frontend UI
+
+API Structure
+Endpoint
+POST /generate
+
+Request Body
+{
+  "idea": "AI transforming rural education",
+  "platform": "LinkedIn",
+  "audience": "Students",
+  "tone": "Professional"
+}
+
+Response Body
+{
+  "hook": "...",
+  "content": "...",
+  "cta": "...",
+  "hashtags": "...",
+  "engagement_score": 85
+}
+
+Project Structure
+PersonaPulse/
+│
+├── frontend/        # React SPA
+├── backend/         # Lambda + Bedrock integration
+├── requirements.md  # Functional & Non-functional requirements
+├── design.md        # System design document
+├── README.md
+└── LICENSE
+
+ Local Setup
+Frontend
 cd frontend
 npm install
 npm start
 
----
 
-## 📈 Market Opportunity
+Runs on:
 
-The global creator economy exceeds $100B.
+http://localhost:3000
 
-PersonaPulse helps:
-- Creators
-- Startups
-- Agencies
-- Marketing teams
+Deployment
 
-Reduce content creation time and increase engagement.
+Backend deployed as:
 
----
+AWS Lambda (Python)
 
-## 🛣️ Future Roadmap
+API Gateway (Regional REST API)
 
-- Brand voice memory
-- Engagement analytics dashboard
-- AI A/B testing
-- Content calendar automation
-- Multi-language support
+Bedrock Serverless Model (Nova Micro)
 
----
+ Scalability
 
-## 👩‍💻 Team
+Fully serverless
 
-Ananya B Pattanashetty
-Anagha Hegde
-Chinmayi K B
+Auto-scaling Lambda
 
----
+Stateless backend
 
-## 📜 License
+Bedrock managed inference
+
+Horizontally scalable architecture
+
+ Security
+
+IAM role-based Bedrock access
+
+HTTPS-only API communication
+
+Input validation
+
+No persistent sensitive data storage
+
+🛣 Future Roadmap
+
+Brand voice memory
+
+Multi-platform batch generation
+
+A/B testing
+
+Content calendar
+
+Analytics dashboard
+
+User authentication (Cognito)
+
+S3 content storage
+
+CloudFront deployment
+
+Demo
+
+Video pitch available in submission materials.
+
+Built For Hackathon
+
+Track: AI for Media, Content & Digital Experiences
+Theme: Meaningful AI for real-world workflows
+
+ License
 
 MIT License
