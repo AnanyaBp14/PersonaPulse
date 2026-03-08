@@ -118,37 +118,21 @@ Supporting localization across multiple languages
 The AI output is constrained to structured JSON via prompt engineering.
 
 4. Component Diagram
-|      User         |
-|   (Web Browser)   |
-          |
-          v
-|   React Frontend  |
-|  Campaign Builder |
-          |
-          v
-|  Amazon API Gateway|
-|   REST Endpoint   |
+      User (Web Browser)   
+         ↓
+  React Frontend (Campaign Builder) 
+         ↓
+  Amazon API Gateway (REST Endpoint)   
+         ↓
+   AWS Lambda (Campaign Generator)
+          ↓
+  Amazon Bedrock (Nova Micro AI)
+          ↓
+   Engagement Scoring(+ JSON Parser)    
+          ↓
+ Frontend Dashboard (Platform Cards
 
-          |
-          v
-|   AWS Lambda      |
-| Campaign Generator|
-          |
-          v
-
-|  Amazon Bedrock   |
-|   Nova Micro AI   |
-
-          |
-          v
-| Engagement Scoring|
-|  + JSON Parser    |
-
-          |
-          v
-| Frontend Dashboard|
-|  Platform Cards   |
-5. Data Flow
+6. Data Flow
 Step 1 — User Input
 
 The user enters:
