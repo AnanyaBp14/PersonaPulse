@@ -1,139 +1,201 @@
 PersonaPulse – System Design Document
-1. High-Level Architecture
+1. System Overview
 
-PersonaPulse is a serverless AI-powered web application that transforms a single idea into platform-optimized content using Amazon Bedrock.
+PersonaPulse is a serverless AI-powered content generation platform that transforms a single marketing idea into platform-optimized posts using Generative AI on AWS.
 
-The system follows a layered serverless architecture, designed for scalability, simplicity, and cloud-native deployment.
+The system uses Amazon Bedrock foundation models to generate structured marketing content tailored to different platforms, audiences, and tones.
 
-Architectural Layers
+PersonaPulse is designed with a serverless, cloud-native architecture, ensuring scalability, low operational overhead, and rapid deployment.
 
-Frontend Layer
+2. High-Level Architecture
 
-React Single Page Application (SPA)
+PersonaPulse follows a layered serverless architecture.
 
-Handles user interaction and content display
-
-API Layer
-
-Amazon API Gateway
-
-Manages routing, throttling, and CORS
-
-Compute Layer
-
-AWS Lambda
-
-Executes business logic and AI orchestration
-
-AI Layer
-
-Amazon Bedrock (Claude model)
-
-Performs content transformation and structured generation
-
-Optional Storage Layer (Future Roadmap)
-
-Amazon DynamoDB for persistent storage
-
-Amazon S3 for content archiving
-
-2. Component Diagram (Logical View)
 User (Browser)
       ↓
-React Frontend (SPA)
+React Frontend
       ↓
 Amazon API Gateway
       ↓
-AWS Lambda Function
+AWS Lambda (Orchestrator)
       ↓
-Amazon Bedrock (Claude Model)
+Amazon Bedrock (Foundation Model)
       ↓
-Lambda Structured Response
+Lambda Processing + Engagement Scoring
       ↓
-Frontend Display (JSON-rendered UI)
+JSON Response → Frontend Dashboard
+3. Architectural Layers
+3.1 Frontend Layer
 
+The frontend is implemented as a React Single Page Application (SPA).
 
-The system is fully stateless in the current prototype.
+Responsibilities:
 
-3. AWS Service Interactions
-3.1 Amazon API Gateway
+User input collection
 
-Exposes REST endpoint: /generate
+Campaign configuration
 
-Handles CORS configuration
+API request handling
 
-Routes POST requests to Lambda
+Rendering AI-generated content
 
-Provides request throttling and rate limiting
+Displaying engagement scores
 
-Secures endpoint via IAM-based integration
+Technologies used:
 
-3.2 AWS Lambda
+React
 
-Responsible for orchestration logic:
+TailwindCSS
 
-Receives user input payload
+Axios
 
-Validates request body
+Lucide Icons
 
-Builds structured prompt
+The frontend communicates with the backend via REST APIs exposed by API Gateway.
 
-Invokes Amazon Bedrock
+3.2 API Layer
 
-Extracts and parses JSON output
+The API layer is implemented using Amazon API Gateway.
 
-Computes engagement score
+Responsibilities:
 
-Returns formatted response to API Gateway
+Exposing REST endpoints
 
-Lambda remains stateless for horizontal scalability.
+Handling request routing
 
-3.3 Amazon Bedrock
+Managing CORS policies
 
-Uses Claude model for generative AI
+Providing throttling and rate limiting
 
-Accepts structured prompt with:
+Forwarding requests to Lambda
 
-Platform
+Primary endpoint:
 
-Audience
+POST /generate
+
+All responses are returned in JSON format.
+
+3.3 Compute Layer
+
+The compute layer is implemented using AWS Lambda.
+
+Lambda acts as the AI orchestration engine.
+
+Responsibilities:
+
+Validating incoming requests
+
+Constructing AI prompts
+
+Invoking Amazon Bedrock
+
+Parsing LLM responses
+
+Computing engagement scores
+
+Returning structured JSON
+
+The Lambda function is stateless, allowing horizontal scaling.
+
+3.4 AI Layer
+
+The AI generation layer uses Amazon Bedrock foundation models.
+
+Prototype model used:
+
+amazon.nova-micro-v1
+
+Responsibilities:
+
+Transforming campaign ideas into structured marketing content
+
+Adapting tone and messaging for each platform
+
+Generating hooks, content bodyand, CTA
+
+Supporting localization across multiple languages
+
+The AI output is constrained to structured JSON via prompt engineering.
+
+4. Component Diagram
++-------------------+
+|      User         |
+|   (Web Browser)   |
++-------------------+
+          |
+          v
++-------------------+
+|   React Frontend  |
+|  Campaign Builder |
++-------------------+
+          |
+          v
++-------------------+
+|  Amazon API Gateway|
+|   REST Endpoint   |
++-------------------+
+          |
+          v
++-------------------+
+|   AWS Lambda      |
+| Campaign Generator|
++-------------------+
+          |
+          v
++-------------------+
+|  Amazon Bedrock   |
+|   Nova Micro AI   |
++-------------------+
+          |
+          v
++-------------------+
+| Engagement Scoring|
+|  + JSON Parser    |
++-------------------+
+          |
+          v
++-------------------+
+| Frontend Dashboard|
+|  Platform Cards   |
++-------------------+
+5. Data Flow
+Step 1 — User Input
+
+The user enters:
+
+Campaign idea
+
+Target platforms
+
+Target audience
 
 Tone
 
-Core idea
+Language
 
-Returns strictly formatted JSON:
+Example:
+
+Idea: AI transforming rural education
+Platform: LinkedIn
+Audience: Students
+Tone: Professional
+Language: English
+Step 2 — API Request
+
+The frontend sends a POST request to the backend.
+
+POST /generate
+
+Payload example:
 
 {
-  "hook": "...",
-  "content": "...",
-  "cta": "...",
-  "hashtags": "..."
+  "idea": "AI transforming rural education",
+  "platforms": ["LinkedIn", "Instagram"],
+  "audience": "Students",
+  "tone": "Professional",
+  "language": "English"
 }
-
-
-The model is constrained via prompt engineering to ensure deterministic structured output.
-
-4. Data Flow
-Step 1 – User Input
-
-User selects:
-
-Idea
-
-Platform
-
-Audience
-
-Tone
-
-Step 2 – API Invocation
-
-Frontend sends HTTP POST request to:
-
-/generate
-
-Step 3 – Lambda Processing
+Step 3 — Lambda Processing
 
 Lambda performs:
 
@@ -141,166 +203,215 @@ Input validation
 
 Prompt construction
 
-Bedrock invocation
+Bedrock model invocation
 
 JSON parsing
 
-Engagement score calculation
+Engagement scoring calculation
 
-Step 4 – AI Generation
+Step 4 — AI Generation
 
-Amazon Bedrock generates structured JSON output.
+Amazon Bedrock generates structured content.
 
-Step 5 – Structured Response
+Example output:
 
-Lambda returns:
+In today's rapidly evolving world, the integration of AI in education is not just a trend but a transformative necessity. Rural education in India, often hampered by a lack of resources, is on the brink of a revolution.
 
-{
-  "hook": "...",
-  "content": "...",
-  "cta": "...",
-  "hashtags": "...",
-  "engagement_score": 87
-}
+AI has the potential to bridge the educational gap in Tier-2 and Tier-3 cities, providing personalized learning experiences to students who might otherwise be left behind. Through advanced algorithms and scalable solutions, AI can deliver tailored educational content, making learning more engaging and effective.
 
+One of the key advantages of AI in rural education is its ability to enhance operational efficiency. By automating administrative tasks and providing real-time analytics, AI frees up valuable time for educators to focus on teaching and student engagement. Moreover, AI-driven platforms can offer access to a vast repository of learning materials, ensuring that students in remote areas have the same opportunities as their urban counterparts.
 
-Frontend renders each component independently.
+The impact of AI on rural education can be seen through several key initiatives. For instance, AI-powered e-learning platforms can facilitate learning during festivals like Diwali and Ugadi, when traditional schools might be closed. Additionally, small and medium-sized enterprises (MSMEs) can benefit from AI by providing skill development programs to rural youth, thereby fostering local economic growth.
 
-5. API Design
+Step 5 — Engagement Scoring
+
+Lambda evaluates generated content using heuristic scoring:
+
+Factors considered:
+
+Hook strength
+
+Emotional tone
+
+Call-to-action clarity
+
+Example:
+
+engagement_score: 87
+Step 6 — Frontend Rendering
+
+The frontend displays results as platform cards, showing:
+
+Hook
+
+Main content
+
+CTA
+
+Engagement score
+
+Users can copy or edit the generated content.
+
+6. API Design
 Endpoint
-
 POST /generate
-
 Request Body
 {
   "idea": "AI transforming rural education",
-  "platform": "LinkedIn",
+  "platforms": ["LinkedIn"],
   "audience": "Students",
-  "tone": "Professional"
+  "tone": "Professional",
+  "language": "English"
 }
+7. Prompt Engineering Strategy
 
-Response Body
-{
-  "hook": "...",
-  "content": "...",
-  "cta": "...",
-  "hashtags": "...",
-  "engagement_score": 85
-}
+The system uses structured prompt engineering to ensure reliable AI outputs.
 
-
-All responses are JSON-based and CORS-enabled.
-
-6. Prompt Engineering Strategy
-
-The system uses structured prompt conditioning to enforce:
-
-Platform-specific formatting
-
-Audience-aware personalization
-
-Tone alignment
-
-Strict JSON-only output
-
-Techniques Used
+Techniques used:
 
 Explicit JSON schema enforcement
 
-Role-based instruction:
+Platform-specific formatting rules
 
-“You are an expert digital content strategist”
+Language constraint rules
 
-Output constraint instructions
+Tone conditioning
 
-Controlled temperature for reduced hallucination
+Output-only JSON instruction
 
-Fallback JSON parsing logic
+Example system instruction:
 
-This ensures reliable structured AI output suitable for downstream automation.
+Return ONLY raw JSON matching this schema.
+Do not include explanations or markdown.
 
-7. Scalability Considerations
+This prevents formatting errors and ensures reliable parsing.
 
-The prototype leverages serverless auto-scaling:
+8. Scalability Strategy
 
-AWS Lambda scales automatically with demand
+PersonaPulse uses serverless infrastructure, enabling automatic scaling.
 
-API Gateway supports high request throughput
+Scalability features:
 
-Bedrock inference scales via managed service
+Lambda auto-scaling
 
-System Design Advantages:
+API Gateway request scaling
 
-Stateless compute
+Managed Bedrock inference scaling
 
-No persistent session dependency
+Advantages:
 
-Horizontal scalability by default
+No server management
 
-Future Scalability Roadmap
+Horizontal scaling by default
 
-DynamoDB for user session persistence
+Pay-per-use pricing
 
-S3 for content storage
+9. Security Considerations
 
-CloudFront for global low-latency delivery
-
-Infrastructure as Code (CloudFormation)
-
-8. Security Considerations
-Current Implementation
-
-IAM role-based access for Bedrock invocation
+Current implementation includes:
 
 HTTPS-only communication
 
+IAM role-based access to Bedrock
+
 Input validation and sanitization
 
-CORS configuration at API Gateway
+CORS configuration
 
-No sensitive user data is persistently stored in the MVP.
+No sensitive user data is stored in the MVP.
 
-Future Security Enhancements
+10. Error Handling Strategy
 
-AWS Cognito for authentication
+The system implements defensive error handling.
 
-Rate limiting per user
+Strategies include:
 
-API key management
+Try–catch blocks in Lambda
 
-JWT-based session validation
+Safe JSON parsing fallback
 
-9. Error Handling Strategy
+Structured error responses
 
-Try-catch blocks in Lambda
+CloudWatch logging
 
-Graceful JSON parsing fallback
+Example error response:
 
-Structured error response format
+{
+  "error": "Model failed to return valid JSON"
+}
+11. Deployment Architecture
+Current Prototype
 
-CloudWatch logging for debugging
+Frontend:
 
-HTTP 500 handling for runtime exceptions
+Local development server (Vite)
 
-This ensures reliability and observability.
+Backend:
 
-10. Deployment Architecture
-Prototype Deployment
+AWS Lambda deployed manually
 
-React frontend running locally
+API Gateway with /prod stage
 
-AWS Lambda deployed via console
-
-API Gateway deployed with stage /prod
-
-Bedrock accessed via IAM execution role
+Bedrock accessed via IAM role
 
 Production Deployment Roadmap
 
-Frontend hosted on S3
+Future production architecture:
 
-Global delivery via CloudFront
+React Frontend
+      ↓
+AWS Amplify Hosting
+      ↓
+Amazon CloudFront
+      ↓
+API Gateway
+      ↓
+Lambda
+      ↓
+Amazon Bedrock
 
-Infrastructure defined via CloudFormation
+Optional additions:
 
-CI/CD pipeline for automated deployments
+DynamoDB for campaign storage
+
+Cognito for authentication
+
+S3 for content archives
+
+12. Hackathon Prototype Scope
+
+The current prototype includes:
+
+Campaign idea input
+
+Platform selection
+
+Audience targeting
+
+Tone customization
+
+Language localization
+
+AI content generation
+
+Engagement scoring
+
+React dashboard interface
+
+The prototype demonstrates the core AI orchestration workflow.
+
+13. Conclusion
+
+PersonaPulse demonstrates how Generative AI combined with serverless cloud infrastructure can transform digital content workflows.
+
+By leveraging Amazon Bedrock and AWS Lambda, the system enables creators and businesses to convert a single idea into multi-platform marketing campaigns within seconds.
+
+This architecture provides:
+
+scalability
+
+flexibility
+
+rapid innovation
+
+while maintaining minimal operational overhead.
