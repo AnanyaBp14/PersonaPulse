@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: PersonaPulse AI Serverless Backend
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: !Ref CampaignTable
+  Api:
+    # This Globals section ensures CORS is applied to all API endpoints
+    Cors:
+      AllowMethods: "'POST,OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
+      MaxAge: "'600'"
+
+Resources:
+  CampaignTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: campaign_id
+        Type: String
+
+  PersonaPulseApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      # Explicitly defining CORS here for the specific API resource
+      Cors:
+        AllowMethods: "'POST,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+
+  CampaignGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # If your files are inside a folder named 'src', this is correct.
+      # Ensure lambda_handler.py is directly inside 'src/'
+      CodeUri: src/
+      Handler: lambda_handler.lambda_handler
+      Runtime: python3.12
+      Architectures:
+        - x86_64
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CampaignTable
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: "*"
+      Events:
+        GenerateApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonaPulseApi
+            Path: /generate
+            Method: post
+        # Adding an OPTIONS method event helps with pre-flight CORS requests
+        OptionsApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref PersonaPulseApi
+            Path: /generate
+            Method: options
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${PersonaPulseApi}.execute-api.${AWS::Region}.amazonaws.com/prod/generate"
