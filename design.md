@@ -12,17 +12,17 @@ PersonaPulse is designed with a serverless, cloud-native architecture, ensuring 
 PersonaPulse follows a layered serverless architecture.
 
 User (Browser)
-      ↓
+      →
 React Frontend
-      ↓
+       →
 Amazon API Gateway
-      ↓
+       →
 AWS Lambda (Orchestrator)
       ↓
 Amazon Bedrock (Foundation Model)
-      ↓
+       →
 Lambda Processing + Engagement Scoring
-      ↓
+       →
 JSON Response → Frontend Dashboard
 3. Architectural Layers
 3.1 Frontend Layer
@@ -119,17 +119,17 @@ The AI output is constrained to structured JSON via prompt engineering.
 
 4. Component Diagram
       User (Web Browser)   
-         ↓
+          →
   React Frontend (Campaign Builder) 
-         ↓
+          →
   Amazon API Gateway (REST Endpoint)   
-         ↓
+          →
    AWS Lambda (Campaign Generator)
-          ↓
+           →
   Amazon Bedrock (Nova Micro AI)
-          ↓
+          →
    Engagement Scoring(+ JSON Parser)    
-          ↓
+           →
  Frontend Dashboard (Platform Cards
 
 6. Data Flow
