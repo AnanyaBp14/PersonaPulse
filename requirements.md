@@ -1,273 +1,338 @@
-# PersonaPulse - Requirements Document
+PersonaPulse AI — Requirements Specification
+1. Project Overview
 
-## Project Overview
+PersonaPulse AI is an AI-powered content orchestration system designed to transform a single content idea into platform-optimized marketing posts for multiple digital channels.
 
-PersonaPulse is an AI-powered content personalization engine that transforms a single content idea into optimized, platform-specific posts tailored by audience demographics and tone preferences. The system leverages Amazon Bedrock to generate engaging content across multiple social media platforms and content channels.
+The system leverages Amazon Bedrock foundation models to generate structured content tailored for different platforms, audiences, and tones.
 
-## Functional Requirements
+PersonaPulse aims to reduce the time required for content creation from hours to seconds by automatically generating hooks, body content, call-to-actions, hashtags, and visual prompts.
 
-### Core Features
+This solution targets creators, startups, and small businesses that need to publish content across multiple platforms but lack marketing resources.
 
-#### FR-1: Content Input and Processing
-- Users can input content ideas via text, voice notes, or file uploads
-- Support for multiple input formats (plain text, bullet points, structured outlines)
-- Content preprocessing to extract key themes and messaging
-- Input validation and sanitization
+2. Problem Statement
 
-#### FR-2: Multi-Platform Content Generation
-- Generate optimized content for:
-  - LinkedIn (professional posts, articles)
-  - Instagram (captions, stories, reels descriptions)
-  - Twitter/X (threads, single tweets)
-  - YouTube (video descriptions, titles, thumbnails text)
-  - Blog posts (introductions, full articles)
-- Platform-specific formatting and character limits
-- Hashtag and mention suggestions per platform
+Content creators and small businesses must publish regularly across multiple platforms such as LinkedIn, Instagram, Twitter, and WhatsApp to remain visible.
 
-#### FR-3: Audience-Based Personalization
-- Define target audience profiles (demographics, interests, behavior)
-- Customize content based on audience segments
-- A/B testing capabilities for different audience approaches
-- Audience engagement history integration
+However, each platform requires different:
 
-#### FR-4: Tone and Voice Selection
-- Predefined tone options (professional, casual, humorous, authoritative, inspirational)
-- Custom brand voice configuration
-- Tone consistency across generated content
-- Voice guidelines enforcement
+tone
 
-#### FR-5: Engagement Scoring and Optimization
-- AI-powered engagement prediction scoring
-- Content optimization suggestions
-- Performance metrics integration
-- Real-time content improvement recommendations
+structure
 
-#### FR-6: Hook and CTA Generation
-- Platform-specific hook generation
-- Call-to-action optimization
-- Attention-grabbing opening lines
-- Conversion-focused closing statements
+formatting
 
-#### FR-7: Content Management
-- Save and organize generated content
-- Version control for content iterations
-- Content calendar integration
-- Batch content generation
+audience targeting
 
-#### FR-8: User Authentication and Authorization
-- Secure user registration and login
-- Role-based access control
-- API key management for integrations
-- Session management
+This forces users to rewrite the same idea multiple times, making content creation slow and inconsistent.
 
-## Non-Functional Requirements
+PersonaPulse solves this by using Generative AI to automatically generate optimized content across platforms from a single idea.
 
-### Performance Requirements
+3. Functional Requirements
+FR-1 Campaign Idea Input
 
-#### NFR-1: Response Time
-- Content generation: < 10 seconds for single platform
-- Bulk generation: < 30 seconds for 5 platforms
-- User interface responsiveness: < 2 seconds
-- API response time: < 5 seconds
+Users must be able to enter a campaign idea that acts as the core content concept.
 
-#### NFR-2: Scalability
-- Support 1000+ concurrent users
-- Handle 10,000+ content generations per day
-- Auto-scaling based on demand
-- Horizontal scaling capabilities
+The system should support:
 
-#### NFR-3: Availability
-- 99.9% uptime SLA
-- Graceful degradation during high load
-- Disaster recovery procedures
-- Multi-region deployment capability
+short text prompts
 
-### Security Requirements
+marketing campaign ideas
 
-#### NFR-4: Data Protection
-- End-to-end encryption for user data
-- GDPR and CCPA compliance
-- Secure API endpoints
-- Input sanitization and validation
+product launch descriptions
 
-#### NFR-5: Authentication Security
-- Multi-factor authentication support
-- OAuth 2.0 integration
-- JWT token management
-- Rate limiting and DDoS protection
+Example input:
 
-### Usability Requirements
+“Promoting an AI tool that helps Indian exporters grow globally.”
 
-#### NFR-6: User Experience
-- Intuitive interface design
-- Mobile-responsive design
-- Accessibility compliance (WCAG 2.1 AA)
-- Progressive web app capabilities
+FR-2 Platform Selection
 
-#### NFR-7: Integration
-- RESTful API for third-party integrations
-- Webhook support for real-time updates
-- Social media platform APIs integration
-- Content management system plugins
+Users must be able to select one or multiple target platforms including:
 
-## System Constraints
+LinkedIn
 
-### Technical Constraints
+Instagram
 
-#### TC-1: Amazon Bedrock Integration
-- Must use Amazon Bedrock as primary AI engine
-- Leverage Claude, Titan, or Jurassic models
-- Implement proper model selection logic
-- Handle Bedrock API limitations and quotas
+Twitter
 
-#### TC-2: AWS Cloud Architecture
-- Serverless-first approach using AWS Lambda
-- API Gateway for request routing
-- CloudFormation for infrastructure as code
-- AWS IAM for security and permissions
+WhatsApp
 
-#### TC-3: Data Storage
-- DynamoDB for user data and content storage
-- S3 for file uploads and static assets
-- ElastiCache for session and cache management
-- CloudWatch for logging and monitoring
+The system should generate platform-specific content optimized for each selected platform.
 
-### Business Constraints
+FR-3 Audience Targeting
 
-#### BC-1: Cost Optimization
-- Pay-per-use pricing model alignment
-- Efficient resource utilization
-- Cost monitoring and alerting
-- Budget-based scaling limits
+Users should be able to select a target audience such as:
 
-#### BC-2: Compliance
-- Content moderation and filtering
-- Platform terms of service adherence
-- Copyright and intellectual property respect
-- Regional data residency requirements
+Students
 
-## Assumptions
+Professionals
 
-### Technical Assumptions
-- Users have stable internet connectivity
-- Modern web browsers with JavaScript enabled
-- Amazon Bedrock service availability and reliability
-- Third-party social media APIs remain stable
+Founders
 
-### Business Assumptions
-- Users are familiar with social media platforms
-- Content creators value time-saving automation
-- Market demand for multi-platform content tools
-- Competitive pricing acceptance in the market
+Small businesses
 
-### User Assumptions
-- Basic understanding of content marketing
-- Willingness to provide audience insights
-- Comfort with AI-generated content suggestions
-- Need for brand consistency across platforms
+The generated content should adjust tone, vocabulary, and messaging based on the selected audience.
 
-## User Personas
+FR-4 Tone Customization
 
-### Primary Persona: Solo Content Creator
-- **Demographics**: 25-40 years old, freelancer or small business owner
-- **Goals**: Maximize reach with minimal time investment
-- **Pain Points**: Limited time, inconsistent posting, platform-specific knowledge gaps
-- **Usage Pattern**: Daily content generation, batch processing
+Users should be able to select a tone for the generated content.
 
-### Secondary Persona: Marketing Manager
-- **Demographics**: 30-45 years old, works at medium-sized company
-- **Goals**: Maintain brand consistency, improve engagement metrics
-- **Pain Points**: Team coordination, brand voice consistency, performance tracking
-- **Usage Pattern**: Weekly planning, team collaboration, analytics review
+Supported tones include:
 
-### Tertiary Persona: Social Media Agency
-- **Demographics**: 25-50 years old, manages multiple client accounts
-- **Goals**: Scalable content production, client satisfaction
-- **Pain Points**: Client-specific customization, bulk processing, reporting
-- **Usage Pattern**: High-volume generation, white-label solutions, client management
+Professional
 
-## Success Metrics
+Conversational
 
-### User Engagement Metrics
-- Daily active users (target: 1000+ within 6 months)
-- Content generation volume (target: 5000+ posts/month)
-- User retention rate (target: 70% monthly retention)
-- Feature adoption rate (target: 80% multi-platform usage)
+Urgent
 
-### Performance Metrics
-- Content generation accuracy (target: 90% user satisfaction)
-- Platform engagement improvement (target: 25% increase)
-- Time savings per user (target: 5+ hours/week)
-- System uptime (target: 99.9% availability)
+The AI model must adapt the content style accordingly.
 
-### Business Metrics
-- Revenue growth (target: $100K ARR within 12 months)
-- Customer acquisition cost optimization
-- Conversion rate from trial to paid (target: 15%)
-- Net Promoter Score (target: 50+)
+FR-5 Language Localization
 
-## Future Enhancements
+PersonaPulse supports Bharat localization, enabling content generation in multiple languages.
 
-### Phase 2 Features
-- Advanced analytics and performance tracking
-- AI-powered content calendar optimization
-- Team collaboration and approval workflows
-- Custom AI model training with user data
+Supported languages include:
 
-### Phase 3 Features
-- Video content generation and optimization
-- Real-time trend analysis and suggestions
-- Advanced audience segmentation and targeting
-- Integration with major CRM and marketing platforms
+English
 
-### Long-term Vision
-- Multi-language content generation
-- Voice and video AI integration
-- Predictive content performance modeling
-- Enterprise-grade security and compliance features
+Hinglish
 
-## Technical Architecture Overview
+Hindi
 
-### Frontend Components
-- React-based single-page application
-- Material-UI or Chakra UI component library
-- State management with Redux or Zustand
-- Progressive Web App capabilities
+Marathi
 
-### Backend Services
-- AWS Lambda functions for business logic
-- API Gateway for request routing and throttling
-- Amazon Bedrock for AI content generation
-- DynamoDB for data persistence
+Kannada
 
-### Infrastructure
-- CloudFormation for infrastructure as code
-- CloudWatch for monitoring and logging
-- CloudFront for content delivery
-- Route 53 for DNS management
+The AI system must generate the entire content strictly in the selected language.
 
-### Security Implementation
-- AWS Cognito for user authentication
-- IAM roles and policies for access control
-- API Gateway authorizers for endpoint security
-- Encryption at rest and in transit
+FR-6 AI Content Generation
 
-## Prototype Scope (Hackathon Version)
+The system must generate structured content using Amazon Bedrock foundation models.
 
-The current hackathon prototype implements:
+Each generated post must include:
 
-- Text-based idea input
-- Platform selection
-- Audience selection
-- Tone customization
-- Structured JSON response (hook, content, CTA, hashtags)
-- Engagement scoring
-- AWS Lambda + API Gateway + Amazon Bedrock integration
+Hook
 
-The following features are part of the production roadmap but not included in the prototype:
+Main content
 
-- Authentication (Cognito)
-- Persistent storage (DynamoDB)
-- Content calendar
-- A/B testing
-- Advanced analytics
+Call-to-action
+
+Hashtags
+
+Output format:
+
+{
+  "hook": "...",
+  "content": "...",
+  "cta": "...",
+  "hashtags": ["#tag1", "#tag2"],
+}
+FR-7 Engagement Scoring
+
+Each generated post should receive an AI engagement score that predicts content effectiveness.
+
+The score evaluates:
+
+Hook strength
+
+CTA clarity
+
+Hashtag quality
+
+Emotional impact
+
+Score range:
+
+0 – 100
+
+This helps users select the best performing content version.
+
+FR-8 Multi-Platform Batch Generation
+
+The system should generate content for multiple platforms simultaneously.
+
+Implementation:
+
+Parallel processing using Python ThreadPoolExecutor in AWS Lambda.
+
+This reduces response latency and improves performance.
+
+4. Non-Functional Requirements
+Performance
+
+Single platform generation time:
+
+< 5 seconds
+
+Batch generation (4 platforms):
+
+< 10 seconds
+
+Scalability
+
+The system must support:
+
+concurrent user requests
+
+serverless scaling using AWS Lambda
+
+stateless architecture
+
+Reliability
+
+The system must handle:
+
+invalid user inputs
+
+LLM response formatting errors
+
+API timeouts
+
+A fallback JSON parser should be used when necessary.
+
+Security
+
+The system must ensure:
+
+sanitized inputs
+
+secure API endpoints
+
+limited Bedrock access via IAM roles
+
+5. AWS Technical Requirements
+
+The solution must use AWS native services including:
+
+Amazon Bedrock
+
+Used for Generative AI content creation.
+
+Model used in the prototype:
+
+amazon.nova-micro-v1
+AWS Lambda
+
+Lambda acts as the AI orchestration layer that:
+
+builds prompts
+
+calls Bedrock
+
+calculates engagement scores
+
+returns structured JSON
+
+Amazon API Gateway
+
+Provides REST API endpoints for the React frontend.
+
+Example endpoint:
+
+POST /generate
+Amazon DynamoDB
+
+Used to store campaign metadata including:
+
+campaign ID
+
+timestamp
+
+campaign title
+
+platforms generated
+
+AWS Amplify
+
+Used to deploy the React frontend and manage authentication.
+
+6. System Architecture
+
+The PersonaPulse architecture follows a serverless AI pipeline.
+
+Flow:
+
+User Interface (React Dashboard)
+
+↓
+
+API Gateway
+
+↓
+
+AWS Lambda (Campaign Orchestrator)
+
+↓
+
+Amazon Bedrock (Generative AI)
+
+↓
+
+Engagement Scoring Engine
+
+↓
+
+DynamoDB Storage
+
+↓
+
+Response returned to frontend
+
+7. User Personas
+Solo Creator
+
+Needs quick content generation for multiple platforms.
+
+Primary goal:
+
+Save time while maintaining high engagement.
+
+Startup Founder
+
+Uses PersonaPulse to generate marketing campaigns for product launches.
+
+Primary goal:
+
+Increase online visibility.
+
+Social Media Manager
+
+Uses PersonaPulse to manage campaigns across platforms.
+
+Primary goal:
+
+Maintain consistent messaging.
+
+8. Success Metrics
+
+The system success will be evaluated using:
+
+Content generation time
+Target: <10 seconds
+
+User productivity improvement
+Target: 5× faster content creation
+
+Content engagement improvement
+Target: 20-30% higher engagement
+
+9. Future Enhancements
+
+Future improvements may include:
+
+AI image generation using Bedrock models
+
+Content scheduling
+
+Social media API publishing
+
+analytics dashboard
+
+trend detection
+
+automated content calendars
+
+10. Conclusion
+
+PersonaPulse demonstrates how Generative AI can transform digital content workflows by automatically converting a single idea into platform-optimized campaigns.
+
+By leveraging Amazon Bedrock and serverless AWS architecture, the system enables creators and businesses to produce high-quality content faster, cheaper, and more consistently.
