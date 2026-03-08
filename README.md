@@ -1,210 +1,219 @@
- PersonaPulse AI
-AI-Powered Multi-Platform Content Personalization Engine
+PersonaPulse AI
 
-Built with Amazon Bedrock (Serverless)
+AI-Powered Omnichannel Content Orchestration Engine for the Creator Economy
 
- Overview
+PersonaPulse AI is a serverless generative-AI platform that transforms a single marketing idea into optimized, platform-specific content for multiple digital channels.
 
-PersonaPulse AI transforms a single content idea into platform-optimized, audience-personalized posts using Generative AI.
+Built on AWS Bedrock + Lambda + API Gateway, the system enables creators, startups, and Indian SMBs to generate personalized content campaigns instantly.
 
-Instead of manually rewriting content for LinkedIn, Instagram, Twitter, YouTube, or blogs, PersonaPulse intelligently adapts tone, structure, and engagement strategy using Amazon Bedrock foundation models.
+🚀 Problem Statement
 
-This project demonstrates meaningful AI usage in real-world content workflows.
+Digital creators, startups, and SMBs struggle to produce high-quality content tailored to each platform.
 
-Problem Statement
+A single marketing idea must often be rewritten multiple times for:
 
-Content creators, students, startups, and marketing teams struggle with:
 
-Rewriting content for multiple platforms
 
-Adjusting tone for different audiences
+LinkedIn
 
-Maintaining brand consistency
+Instagram
 
-Improving engagement without guesswork
+Twitter
 
-Manual rewriting is repetitive and time-consuming.
+WhatsApp
 
-Solution
+This process is:
 
-PersonaPulse AI:
+• Time-consuming
 
-Accepts a core idea
+• Requires marketing expertise
 
-Adapts it for selected platform
+• Leads to inconsistent messaging
 
-Personalizes tone and audience
+Small teams cannot afford dedicated content strategists.
 
-Generates structured output (Hook, Content, CTA, Hashtags)
+💡 Our Solution
 
-Predicts engagement score
+PersonaPulse AI converts one idea into a full omnichannel campaign.
 
-All powered by Amazon Bedrock.
+Users input a single campaign concept, and the AI generates:
 
- Why AI?
 
-This problem requires:
 
-Semantic understanding
+Hook
 
-Context-aware rewriting
+Main content
 
-Tone transformation
+Call-to-Action
 
-Platform-aware formatting
+Hashtags
 
-Structured JSON generation
+Engagement score
 
-Traditional rule-based systems cannot handle this.
+All content is optimized for the selected platform and audience.
 
-Amazon Bedrock enables intelligent, scalable content transformation.
+🌟 Key Features
 
-Architecture
-User (Browser)
-      ↓
-React Frontend (SPA)
-      ↓
+AI Campaign Generator
+
+Transforms a single idea into complete marketing posts.
+
+
+
+Omnichannel Output
+
+Generates optimized posts for:
+
+• LinkedIn
+
+• Twitter
+
+• Instagram
+
+• WhatsApp Broadcast
+
+Bharat Localization
+
+Supports regional content styles including:
+
+• English
+
+• Hinglish
+
+• Hindi
+
+• Marathi
+
+• Kannada
+
+AI Engagement Score
+
+Custom heuristic scoring system that evaluates:
+
+
+
+Hook strength
+
+CTA clarity
+
+Hashtag density
+
+Emotional tone
+
+Image Prompt Generator
+
+Automatically generates AI image prompts for visual content creation.
+
+🧠 Why AI is Required
+
+Traditional rule-based software cannot convert a high-level idea into nuanced platform-specific marketing content.
+
+Generative AI enables:
+
+• Semantic understanding of marketing ideas
+
+• Tone adaptation for different audiences
+
+• Cultural localization for Indian markets
+
+• Structured JSON output for automated workflows
+
+Without AI, this level of intelligent content transformation is impossible.
+
+⚙️ Architecture
+
+React Frontend
+
+↓
+
 Amazon API Gateway
-      ↓
-AWS Lambda
-      ↓
-Amazon Bedrock (Nova Micro)
-      ↓
-Structured JSON Response
-      ↓
-Frontend Rendering
 
- AWS Services Used
+↓
 
-Amazon Bedrock (Nova Micro – Serverless)
+AWS Lambda (Campaign Orchestrator)
 
-AWS Lambda (Backend logic)
+↓
 
-Amazon API Gateway (REST endpoint)
+Amazon Bedrock (Nova Micro Model)
 
-IAM Roles (Secure Bedrock access)
+↓
 
-CloudWatch (Monitoring & Logs)
+Custom Engagement Scoring Logic
 
-Features
+↓
 
-Platform selection (LinkedIn, Instagram, Twitter, YouTube, Blog)
+Amazon DynamoDB (Campaign Storage)
 
-Audience targeting
+☁️ AWS Services Used
 
-Tone customization
+ServicePurposeAmazon BedrockGenerative AI content generationAWS LambdaBackend orchestration and scoringAmazon API GatewayREST API interfaceAmazon DynamoDBCampaign storageAWS AmplifyFrontend hosting and authenticationAmazon S3Static web hosting📊 AI Workflow
 
-Structured JSON output
+1️⃣ User enters campaign idea
 
-Engagement scoring system
+2️⃣ Lambda constructs structured prompt
 
-AI-powered prompt conditioning
+3️⃣ Bedrock generates platform-specific content
 
-Serverless scalable backend
+4️⃣ Engagement scoring logic evaluates output
 
-Futuristic AI frontend UI
+5️⃣ Results rendered in dashboard UI
 
-API Structure
-Endpoint
-POST /generate
+🧩 Tech Stack
 
-Request Body
-{
-  "idea": "AI transforming rural education",
-  "platform": "LinkedIn",
-  "audience": "Students",
-  "tone": "Professional"
-}
-
-Response Body
-{
-  "hook": "...",
-  "content": "...",
-  "cta": "...",
-  "hashtags": "...",
-  "engagement_score": 85
-}
-
-Project Structure
-PersonaPulse/
-│
-├── frontend/        # React SPA
-├── backend/         # Lambda + Bedrock integration
-├── requirements.md  # Functional & Non-functional requirements
-├── design.md        # System design document
-├── README.md
-└── LICENSE
-
- Local Setup
 Frontend
-cd frontend
+
+• React (Vite)
+
+• TailwindCSS
+
+• Amplify Auth
+
+Backend
+
+• Python (AWS Lambda)
+
+• Amazon Bedrock
+
+• DynamoDB
+
+Infrastructure
+
+• API Gateway
+
+• AWS Amplify Hosting
+
+🖥️ Live Prototype
+
+Deployed link: https://main.d1c5b2jxa4xlij.amplifyapp.com/
+
+🎥 Demo Video
+
+Demo link here.
+
+Example
+
+https://youtu.be/demo
+
+📦 Installation
+
+Frontend
+
 npm install
-npm start
 
+npm run dev
 
-Runs on:
+Backend
 
-http://localhost:3000
+sam build
 
-Deployment
+sam deploy
 
-Backend deployed as:
+🏆 Impact
 
-AWS Lambda (Python)
+PersonaPulse reduces the time required to create a full marketing campaign from 3 hours to under 10 seconds.
 
-API Gateway (Regional REST API)
+It empowers Indian creators and SMBs to scale their digital presence without hiring marketing teams.
 
-Bedrock Serverless Model (Nova Micro)
-
- Scalability
-
-Fully serverless
-
-Auto-scaling Lambda
-
-Stateless backend
-
-Bedrock managed inference
-
-Horizontally scalable architecture
-
- Security
-
-IAM role-based Bedrock access
-
-HTTPS-only API communication
-
-Input validation
-
-No persistent sensitive data storage
-
-🛣 Future Roadmap
-
-Brand voice memory
-
-Multi-platform batch generation
-
-A/B testing
-
-Content calendar
-
-Analytics dashboard
-
-User authentication (Cognito)
-
-S3 content storage
-
-CloudFront deployment
-
-Demo
-
-Video pitch available in submission materials.
-
-Built For Hackathon
-
-Track: AI for Media, Content & Digital Experiences
-Theme: Meaningful AI for real-world workflows
-
- License
+📜 License
 
 MIT License
