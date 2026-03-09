@@ -186,13 +186,7 @@ Infrastructure
 
 Deployed link: https://main.d1c5b2jxa4xlij.amplifyapp.com/
 
-🎥 Demo Video
-
-Demo link here.
-
-Example
-
-https://youtu.be/demo
+🎥 Demo Video link: https://www.youtube.com/watch?v=WmY8jzs1Cvk
 
 📦 Installation
 
